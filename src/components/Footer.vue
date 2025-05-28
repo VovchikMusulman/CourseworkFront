@@ -4,23 +4,20 @@
     <div class="footerLinks">
       <div>
         <h2>Каталог мебели</h2>
-          <nav>
-            <ul>
-              <li><a href="/catalog" >Кровати ЛОФТ</a></li>
-              <li><a href="/catalog" >Прихожие</a></li>
-              <li><a href="/catalog" >Тумбы</a></li>
-              <li><a href="/catalog" >Комоды</a></li>
-              <li><a href="/catalog" >Шкафы</a></li>
-            </ul>
-          </nav>
+        <nav>
+          <ul>
+            <li v-for="category in firstHalfCategories" :key="category.id">
+              <a :href="`/categories/${category.slug || category.id}`">{{ category.name }}</a>
+            </li>
+          </ul>
+        </nav>
       </div>
       <div class="linkBoxNoneH2">
         <nav>
           <ul>
-            <li><a href="/catalog" >Стеллажи</a></li>
-            <li><a href="/catalog" >Столы</a></li>
-            <li><a href="/catalog" >Стулья</a></li>
-            <li><a href="/catalog" >Полки</a></li>
+            <li v-for="category in secondHalfCategories" :key="category.id">
+              <a :href="`/categories/${category.slug || category.id}`">{{ category.name }}</a>
+            </li>
           </ul>
         </nav>
       </div >
@@ -49,18 +46,18 @@
         <h2>Всегда на связи</h2>
           <nav>
             <ul>
-              <li><img src="../assets/icons/locLink.png" alt="a"><a href="/contacts" >Контакты</a></li>
-              <li><img src="../assets/icons/phone.png" alt="a"><a href="tel:8 952 155-38-82">8 952 155-38-82</a></li>
-              <li><img src="../assets/icons/mailLink.png" alt="a"><a href="mailto:SibSvarkaPlus@yandex.ru">SibSvarkaPlus@yandex.ru</a></li>
+              <li><img src="../assets/icons/Footer/locLink.png" alt="a"><a href="/contacts" >Контакты</a></li>
+              <li><img src="../assets/icons/Footer/phone.png" alt="a"><a href="tel:8 952 155-38-82">8 952 155-38-82</a></li>
+              <li><img src="../assets/icons/Footer/mailLink.png" alt="a"><a href="mailto:SibSvarkaPlus@yandex.ru">SibSvarkaPlus@yandex.ru</a></li>
             </ul>
           </nav>
       </div>
       <div class="linkBoxNoneH2">
         <nav>
           <ul>
-            <li><img src="../assets/icons/time.png" alt="a"><a href="/contacts" >пн - вс 07:00 - 18:00</a></li>
-            <li><img src="../assets/icons/vkLink.png" alt="a"><a href="https://vk.com/SibSvarkaPlus">ВКонтакте</a></li>
-            <li><img src="../assets/icons/tgLink.png" alt="a"><a href="https://t.me/SibSvarkaPlus">Telegram</a></li>
+            <li><img src="../assets/icons/Footer/time.png" alt="a"><a href="/contacts" >пн - вс 07:00 - 18:00</a></li>
+            <li><img src="../assets/icons/Footer/vkLink.png" alt="a"><a href="https://vk.com/SibSvarkaPlus">ВКонтакте</a></li>
+            <li><img src="../assets/icons/Footer/tgLink.png" alt="a"><a href="https://t.me/SibSvarkaPlus">Telegram</a></li>
           </ul>
         </nav>
       </div>
@@ -76,14 +73,39 @@
   </footer>
 </template>
 
-<script setup>
-import { useRouter } from 'vue-router';
-const router = useRouter();
-const scrollToGallery = async () => {
-  await router.push('/'); // Переход на главную страницу
-  const galleryElement = document.getElementById('gallery');
-  if (galleryElement) {
-    galleryElement.scrollIntoView({ behavior: 'smooth' });
+<script>
+export default {
+  data() {
+    return {
+      categories: []
+    };
+  },
+  computed: {
+    firstHalfCategories() {
+      const half = Math.ceil(this.categories.length / 2);
+      return this.categories.slice(0, half);
+    },
+    secondHalfCategories() {
+      const half = Math.ceil(this.categories.length / 2);
+      return this.categories.slice(half);
+    }
+  },
+  async created() {
+    try {
+      const response = await fetch('http://localhost:8000/api/categories');
+      this.categories = await response.json();
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  },
+  methods: {
+    scrollToGallery() {
+      this.$router.push('/');
+      const galleryElement = document.getElementById('gallery');
+      if (galleryElement) {
+        galleryElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   }
 };
 </script>

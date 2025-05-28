@@ -12,10 +12,10 @@
         <router-link to="/contacts">Контакты</router-link>
       </nav>
       <nav>
-        <router-link to="/contacts"><img src="../assets/icons/contacts.png" alt="contacts"></router-link>
-        <router-link to="/404"><img src="../assets/icons/favourites.png" alt="favourites"></router-link>
-        <router-link to="/cart"><img src="../assets/icons/cart.png" alt="cart"></router-link>
-        <router-link to="/login"><img src="../assets/icons/profile.png" alt="profile"></router-link>
+        <router-link to="/contacts"><img src="../assets/icons/Header/contacts.png" alt="contacts"></router-link>
+        <router-link to="/404"><img src="../assets/icons/Header/favourites.png" alt="favourites"></router-link>
+        <router-link to="/cart"><img src="../assets/icons/Header/cart.png" alt="cart"></router-link>
+        <router-link to="/login"><img src="../assets/icons/Header/profile.png" alt="profile"></router-link>
       </nav>
     </div>
     <div class="headerDown">

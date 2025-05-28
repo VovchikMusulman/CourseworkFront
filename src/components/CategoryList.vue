@@ -40,7 +40,6 @@ export default {
 </script>
 
 <style scoped>
-/* Стили остаются без изменений */
 .category-section {
   margin-bottom: 24px;
   display: flex;
